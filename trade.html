@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEOGOBLIN DEX - Redirect</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #9b5de5 0%, #f15bb5 100%); color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .container { text-align: center; padding: 40px; }
+        h1 { font-size: 3em; margin-bottom: 20px; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+        p { font-size: 1.5em; margin-bottom: 30px; }
+        .loader { width: 60px; height: 60px; border: 6px solid rgba(255,255,255,0.3); border-top: 6px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        a.button { display: inline-block; padding: 15px 40px; background: #fff; color: #9b5de5; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 1.2em; transition: transform 0.3s, box-shadow 0.3s; }
+        a.button:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👹 NEOGOBLIN DEX</h1>
+        <p>Redirecting you to the trading platform...</p>
+        <div class="loader"></div>
+        <br>
+        <a href="/index.html" id="directLink" class="button">→ Open Trading Platform Now ←</a>
+    </div>
+
+    <script>
+        // Auto-redirect after 3 seconds
+        setTimeout(() => {
+            window.location.href = '/index.html';
+        }, 3000);
+    </script>
+</body>
+</html>
