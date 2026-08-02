@@ -6,137 +6,159 @@
     <title>NEOGOBLIN DEX - Global Decentralized Exchange</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary: #9b5de5; --secondary: #f15bb5; --accent: #eeb311; --dark: #0d0d0d; --card-bg: rgba(255, 255, 255, 0.05); }
+        :root { --goblin-green: #4CAF50; --goblin-dark: #2E7D32; --goblin-light: #81C784; --goblin-brown: #795548; --goblin-brown-light: #A1887F; --goblin-brown-dark: #5D4037; --dark: #0d0d0d; --card-bg: rgba(255, 255, 255, 0.05); }
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 50%, #0d0d0d 100%); 
+            font-family: 'Inter', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, var(--dark) 0%, #0a1a0a 50%, #050a05 100%); 
             color: #fff; 
             min-height: 100vh;
-            animation: bgFade 2s ease-in-out;
+            overflow-x: hidden;
         }
         @keyframes bgFade { 0% { opacity: 0.6; transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
         
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; position: relative; }
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .particle { position: absolute; background: radial-gradient(circle, var(--primary), transparent); border-radius: 50%; opacity: 0.3; animation: float 15s infinite; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+        .particle { position: absolute; background: radial-gradient(circle, var(--goblin-green), transparent); border-radius: 50%; opacity: 0.3; animation: float 15s infinite; filter: blur(10px); }
         @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 50% { transform: translateY(-100px) rotate(180deg); opacity: 0.6; } }
         
         header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 25px 0; border-bottom: 2px solid transparent; 
-            background: linear-gradient(90deg, rgba(155, 93, 229, 0.1), transparent, rgba(241, 91, 181, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            padding: 25px 30px; border-radius: 25px; 
+            background: rgba(46, 125, 50, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
             margin-bottom: 30px;
             animation: slideDown 0.8s ease-out;
+            box-shadow: 0 10px 40px rgba(76,175,80,0.2);
         }
         @keyframes slideDown { 0% { transform: translateY(-50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
         
-        .logo { font-size: 2.2em; font-weight: bold; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; animation: logoGlow 3s infinite alternate; }
-        @keyframes logoGlow { 0% { filter: drop-shadow(0 0 10px rgba(155, 93, 229, 0.5)); } 100% { filter: drop-shadow(0 0 25px rgba(241, 91, 181, 0.7)); } }
-        .logo span { color: var(--secondary); }
+        .logo { 
+            font-family: 'Press Start 2P', cursive, sans-serif; 
+            font-size: 2.5em; 
+            font-weight: bold; 
+            background: linear-gradient(135deg, var(--goblin-green), var(--goblin-light)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            text-shadow: none; 
+            animation: logoGlow 3s infinite alternate;
+            text-shadow: 0 0 20px rgba(76,175,80,0.8);
+        }
+        @keyframes logoGlow { 0% { filter: drop-shadow(0 0 10px rgba(76,175,80,0.5)); } 100% { filter: drop-shadow(0 0 25px rgba(129,199,132,0.9)); } }
+        .logo span { background: linear-gradient(135deg, var(--goblin-brown), var(--goblin-brown-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .lang-switch { display: flex; gap: 10px; flex-wrap: wrap; }
+        .lang-switch { display: flex; gap: 12px; flex-wrap: wrap; }
         .lang-btn { 
-            padding: 8px 16px; 
-            background: var(--card-bg); 
-            border: 1px solid var(--primary); 
+            padding: 10px 20px; 
+            background: rgba(129,199,132,0.2); 
+            border: 2px solid var(--goblin-green); 
             border-radius: 25px; 
             cursor: pointer; 
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 0.9em;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--goblin-light);
         }
         .lang-btn:hover, .lang-btn.active { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            background: linear-gradient(135deg, var(--goblin-green), var(--goblin-brown)); 
             color: #fff; 
             transform: scale(1.1) rotateY(5deg);
-            box-shadow: 0 10px 30px rgba(155, 93, 229, 0.4);
+            box-shadow: 0 10px 30px rgba(76,175,80,0.5);
+            border-color: var(--goblin-light);
         }
         
         .user-info { 
-            background: rgba(155, 93, 229, 0.15); 
-            padding: 15px 30px; 
-            border-radius: 15px; 
-            margin: 25px 0; 
+            background: rgba(46, 125, 50, 0.15); 
+            padding: 20px 40px; 
+            border-radius: 20px; 
+            margin: 30px 0; 
             text-align: center; 
-            border: 1px solid rgba(155, 93, 229, 0.3);
-            box-shadow: 0 8px 32px rgba(155, 93, 229, 0.2);
+            border: 2px solid rgba(76, 175, 80, 0.4);
+            box-shadow: 0 10px 40px rgba(76,175,80,0.3);
             animation: fadeInUp 0.8s ease-out;
+            backdrop-filter: blur(15px);
         }
         @keyframes fadeInUp { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
         
         .price-ticker { 
-            background: rgba(255, 255, 255, 0.03); 
-            padding: 20px; 
+            background: rgba(46, 125, 50, 0.1); 
+            padding: 25px; 
             overflow: hidden; 
             white-space: nowrap;
-            border-radius: 15px;
-            border: 1px solid rgba(155, 93, 229, 0.2);
-            box-shadow: inset 0 0 20px rgba(155, 93, 229, 0.1);
+            border-radius: 20px;
+            border: 2px solid rgba(76, 175, 80, 0.4);
+            box-shadow: inset 0 0 30px rgba(76,175,80,0.2);
+            animation: pulseBorder 3s infinite;
+            backdrop-filter: blur(10px);
         }
+        @keyframes pulseBorder { 0%, 100% { border-color: rgba(76,175,80,0.4); } 50% { border-color: rgba(76,175,80,0.7); } }
         .ticker-content { display: inline-block; animation: ticker 40s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .ticker-item { display: inline-block; margin-right: 50px; font-weight: bold; padding: 5px 15px; border-radius: 20px; transition: transform 0.3s; }
-        .ticker-item:hover { transform: scale(1.1); background: rgba(155, 93, 229, 0.2); }
+        .ticker-item { display: inline-block; margin-right: 60px; font-weight: bold; padding: 12px 25px; border-radius: 25px; transition: transform 0.3s; border: 1px solid var(--goblin-green); }
+        .ticker-item:hover { transform: scale(1.15); background: rgba(76,175,80,0.3); }
         
-        .section { margin: 50px 0; animation: fadeInLeft 1s ease-out; }
+        .section { margin: 60px 0; animation: fadeInLeft 1s ease-out; }
         @keyframes fadeInLeft { 0% { transform: translateX(-50px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
         h2 { 
-            color: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            margin-bottom: 25px; 
-            font-size: 2em; 
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--goblin-green); 
+            margin-bottom: 35px; 
+            font-size: 2.5em; 
+            background: linear-gradient(135deg, var(--goblin-green), var(--goblin-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
+            text-shadow: 0 0 30px rgba(76,175,80,0.6);
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 800;
         }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .card { 
-            background: var(--card-bg); 
-            border: 1px solid rgba(155, 93, 229, 0.4); 
-            border-radius: 20px; 
-            padding: 30px; 
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(129,199,132,0.1)); 
+            border: 2px solid var(--goblin-green); 
+            border-radius: 25px; 
+            padding: 40px; 
             text-align: center; 
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(76,175,80,0.2);
         }
         .card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--goblin-green), var(--goblin-brown));
             transform: scaleX(0);
             transition: transform 0.5s;
         }
         .card:hover::before { transform: scaleX(1); }
         .card:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            box-shadow: 0 20px 50px rgba(155, 93, 229, 0.4);
-            border-color: var(--primary);
+            transform: translateY(-15px) scale(1.05); 
+            box-shadow: 0 25px 60px rgba(76,175,80,0.5);
+            border-color: var(--goblin-light);
         }
         .card h3 { 
-            color: var(--secondary); 
-            margin-bottom: 20px; 
-            font-size: 1.8em; 
-            text-shadow: 0 0 15px rgba(241, 91, 181, 0.6);
+            color: var(--goblin-brown); 
+            margin-bottom: 25px; 
+            font-size: 2em; 
+            text-shadow: 0 0 20px rgba(121,85,72,0.8);
+            font-family: 'Press Start 2P', cursive;
         }
-        .price { font-size: 2.5em; font-weight: bold; margin: 15px 0; letter-spacing: 1px; }
-        .up { color: #00ff88; text-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
-        .down { color: #ff4757; text-shadow: 0 0 20px rgba(255, 71, 87, 0.6); }
+        .price { font-size: 2.8em; font-weight: 800; margin: 20px 0; letter-spacing: 2px; text-shadow: 0 0 20px rgba(129,199,132,0.8); }
+        .up { color: #00ff88; text-shadow: 0 0 30px rgba(0,255,136,0.8); }
+        .down { color: #ff4757; text-shadow: 0 0 30px rgba(255,71,87,0.8); }
         
         .swap-box { 
-            background: linear-gradient(135deg, rgba(155, 93, 229, 0.08), rgba(241, 91, 181, 0.08)); 
-            border: 2px solid var(--primary); 
-            border-radius: 25px; 
-            padding: 50px; 
-            margin-top: 30px;
-            box-shadow: 0 20px 60px rgba(155, 93, 229, 0.3);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.15), rgba(129,199,132,0.15)); 
+            border: 3px solid var(--goblin-green); 
+            border-radius: 30px; 
+            padding: 60px; 
+            margin-top: 40px;
+            box-shadow: 0 30px 80px rgba(76,175,80,0.4);
+            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
         }
@@ -144,298 +166,300 @@
             content: '';
             position: absolute;
             top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(241, 91, 181, 0.1), transparent 70%);
+            background: radial-gradient(circle, rgba(76,175,80,0.15), transparent 70%);
             animation: rotateBg 20s linear infinite;
         }
         @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .input-group { display: flex; justify-content: space-between; margin: 30px 0; gap: 20px; }
-        .input-field { flex: 1; margin: 10px; }
-        input[type="number"] { 
+        .input-group { margin-bottom: 30px; }
+        .input-group label { display: block; font-size: 1.2em; margin-bottom: 15px; color: var(--goblin-light); font-weight: 600; }
+        .input-group input, .input-group select { 
             width: 100%; 
             padding: 20px; 
-            background: rgba(155, 93, 229, 0.1); 
-            border: 2px solid var(--primary); 
             border-radius: 15px; 
-            color: #fff; 
-            font-size: 1.4em; 
-            transition: all 0.4s;
-        }
-        input[type="number"]:focus { 
-            background: rgba(155, 93, 229, 0.2); 
-            border-color: var(--secondary); 
-            box-shadow: 0 0 30px rgba(155, 93, 229, 0.5);
-            transform: scale(1.02);
-        }
-        select { 
-            width: 100%; 
-            padding: 20px; 
-            background: rgba(155, 93, 229, 0.1); 
-            border: 2px solid var(--primary); 
-            border-radius: 15px; 
-            color: #fff; 
-            font-size: 1.2em; 
-            cursor: pointer;
-            transition: all 0.4s;
-        }
-        select:hover, select:focus { 
-            background: rgba(155, 93, 229, 0.2); 
-            border-color: var(--secondary); 
-            box-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
-        }
-        
-        button.action-btn { 
-            width: 100%; 
-            padding: 25px; 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            border: none; 
-            border-radius: 20px; 
-            color: #fff; 
-            font-size: 1.5em; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 30px; 
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 40px rgba(155, 93, 229, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        button.action-btn:hover { 
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 20px 60px rgba(241, 91, 181, 0.7);
-        }
-        button.action-btn:active { transform: translateY(-2px) scale(0.98); }
-        
-        .slider-container { margin: 40px 0; }
-        input[type="range"] { 
-            width: 100%; 
-            height: 10px; 
-            background: rgba(155, 93, 229, 0.2); 
-            border-radius: 10px; 
+            border: 2px solid var(--goblin-green);
+            background: rgba(46, 125, 50, 0.3); 
+            color: white; 
+            font-size: 1.8em; 
             outline: none;
             transition: all 0.3s;
+            box-shadow: inset 0 0 20px rgba(76,175,80,0.2);
         }
-        input[type="range"]::-webkit-slider-thumb {
-            width: 25px; height: 25px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(155, 93, 229, 0.8);
-            transition: all 0.3s;
+        .input-group input:focus, .input-group select:focus { 
+            border-color: var(--goblin-light);
+            box-shadow: 0 0 30px rgba(76,175,80,0.5);
+            transform: scale(1.02);
         }
-        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
+        .input-group select { margin-top: 10px; font-size: 1.2em; appearance: none; cursor: pointer; }
         
-        .bridge-routes { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 30px; }
-        .route-card { 
-            background: rgba(155, 93, 229, 0.15); 
-            border: 2px solid var(--primary); 
-            border-radius: 20px; 
+        .slider-container { margin-top: 30px; }
+        .slider-container label { display: block; font-size: 1.1em; margin-bottom: 15px; color: var(--goblin-light); font-weight: 600; }
+        .slider-container input[type="range"] { 
+            width: 100%; 
+            margin-top: 15px; 
+            accent-color: var(--goblin-brown);
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(46, 125, 50, 0.5);
+        }
+        
+        .swap-btn { 
+            width: 100%; 
             padding: 25px; 
-            transition: all 0.5s;
-            backdrop-filter: blur(10px);
+            margin-top: 40px; 
+            border-radius: 20px; 
+            border: none; 
+            background: linear-gradient(135deg, var(--goblin-green), var(--goblin-light)); 
+            color: #fff; 
+            font-size: 1.8em; 
+            font-weight: 800; 
+            cursor: pointer; 
+            box-shadow: 0 15px 40px rgba(76,175,80,0.5); 
+            transition: all 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
         }
-        .route-card:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            box-shadow: 0 15px 40px rgba(155, 93, 229, 0.4);
-            background: rgba(155, 93, 229, 0.25);
+        .swap-btn:hover { 
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(129,199,132,0.7);
         }
+        .swap-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .swap-btn:hover::before { left: 100%; }
         
-        footer { 
-            text-align: center; 
-            padding: 40px; 
-            margin-top: 60px; 
-            color: #888; 
-            border-top: 1px solid rgba(155, 93, 229, 0.3);
-            animation: fadeIn 1.5s ease-out;
-        }
-        @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+        .down-arrow { text-align: center; margin: 30px 0; position: relative; z-index: 5; }
+        .down-arrow svg { fill: var(--goblin-light); filter: drop-shadow(0 0 10px rgba(129,199,132,0.8)); }
         
-        /* Smooth loading */
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-        .loading { animation: pulse 1.5s infinite; }
+        @media (max-width: 768px) {
+            .lang-switch { flex-direction: column; gap: 8px; }
+            .lang-btn { width: 100%; text-align: left; }
+            .container { padding: 15px; }
+            .card { padding: 30px; }
+            .swap-box { padding: 40px; }
+            .price { font-size: 2em; }
+            h2 { font-size: 2em; }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
+    <div class="particles">
+        <div class="particle" style="left:10%; top:20%; width:80px; height:80px;"></div>
+        <div class="particle" style="left:70%; top:60%; width:120px; height:120px;"></div>
+        <div class="particle" style="left:40%; top:80%; width:60px; height:60px;"></div>
+        <div class="particle" style="left:85%; top:30%; width:100px; height:100px;"></div>
+        <div class="particle" style="left:25%; top:10%; width:90px; height:90px;"></div>
+        <div class="particle" style="left:60%; top:75%; width:70px; height:70px;"></div>
+    </div>
     
     <div class="container">
         <header>
-            <div class="logo">👹 NEO<span>Goblin</span> DEX</div>
-            <div class="lang-switch" id="languageSwitcher"></div>
+            <div class="logo">👹 NEO<span>GOBLIN</span></div>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="id">ID</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="zh">ZH</button>
+                <button class="lang-btn" data-lang="ja">JA</button>
+                <button class="lang-btn" data-lang="ko">KO</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="pt">PT</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="it">IT</button>
+                <button class="lang-btn" data-lang="nl">NL</button>
+                <button class="lang-btn" data-lang="tr">TR</button>
+                <button class="lang-btn" data-lang="hi">HI</button>
+                <button class="lang-btn" data-lang="th">TH</button>
+                <button class="lang-btn" data-lang="vi">VI</button>
+            </div>
         </header>
 
         <div class="user-info">
-            <strong>🌍 Your Location:</strong> <span id="userLocation">Detecting...</span><br>
-            <strong>🕐 Local Time:</strong> <span id="localTime">Loading...</span> (<span id="timezone">UTC</span>)
+            <strong>🌍 Lokasi Anda:</strong> <span id="location">Mengdetect...</span><br>
+            <strong>🕐 Waktu Lokal:</strong> <span id="local-time">Loading...</span> (<span id="timezone">UTC</span>)
         </div>
 
         <div class="price-ticker">
-            <div class="ticker-content" id="tickerContent"></div>
+            <div class="ticker-content" id="ticker-content">Loading harga...</div>
         </div>
 
         <div class="section">
-            <h2>🌉 CROSS-BRIDGE ROUTER RELAY SYSTEM</h2>
-            <p style="margin-bottom: 20px;">Automatic multi-chain routing via optimized relay network</p>
-            <div class="bridge-routes" id="bridgeRoutes"></div>
-        </div>
-
-        <div class="section">
-            <h2>Swap Tokens</h2>
-            <div class="swap-box">
-                <div class="input-group">
-                    <div class="input-field">
-                        <label>You Send</label>
-                        <input type="number" placeholder="0" id="sendAmount">
-                        <select id="sendToken">
-                            <option>SOL ⚡</option>
-                            <option>ETH 🟣</option>
-                            <option>BSC 🔺</option>
-                            <option>USDC 💎</option>
-                            <option>BNB 🟡</option>
-                        </select>
-                    </div>
-                    <div class="input-field">
-                        <label>You Receive</label>
-                        <input type="number" placeholder="0" id="receiveAmount" readonly>
-                        <select id="receiveToken">
-                            <option>GOBLIN 👹</option>
-                            <option>USDT 💵</option>
-                            <option>DAI 📊</option>
-                            <option>PYTH 🦒</option>
-                            <option>JUP 🪐</option>
-                        </select>
-                    </div>
+            <h2>🌉 SISTEM ROUTER CROSS-BRIDGE</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>SOLANA ⚡</h3>
+                    <p>Fee: ~$0.05 • Konfirmasi: ~0.4s</p>
+                    <div class="price up">$180.50 ▲ 3.2%</div>
                 </div>
-                <div class="slider-container">
-                    <label>Slippage Tolerance (Uniswap Mode): <span id="slippageValue">0.5%</span></label>
-                    <input type="range" id="slippageSlider" min="0.1" max="10" step="0.1" value="0.5">
-                    <small>Auto-adjusts based on market volatility</small>
+                <div class="card">
+                    <h3>ETHEREUM 🟣</h3>
+                    <p>Fee: ~$2.30 • Konfirmasi: ~12s</p>
+                    <div class="price down">$3,250.00 ▼ 1.5%</div>
                 </div>
-                <div style="text-align: left; margin: 30px 0;">
-                    <strong>Rate:</strong> <span id="exchangeRate">Fetching...</span><br>
-                    <strong>Fee:</strong> <span id="feeInfo">0.1%</span>
+                <div class="card">
+                    <h3>BSC 🔺</h3>
+                    <p>Fee: ~$0.15 • Konfirmasi: ~3s</p>
+                    <div class="price up">$620.75 ▲ 2.1%</div>
                 </div>
-                <button class="action-btn">Swap Now</button>
+                <div class="card">
+                    <h3>ARBITRUM 🦄</h3>
+                    <p>Fee: ~$0.08 • Konfirmasi: ~2s</p>
+                    <div class="price up">$1.85 ▲ 0.8%</div>
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>LIVE MARKET PRICES</h2>
-            <div class="grid" id="marketPrices"></div>
+            <h2>🪙 SWAP TOKEN</h2>
+            <div class="swap-box">
+                <div class="input-group">
+                    <label>Kirim</label>
+                    <input type="number" placeholder="0.00" value="0" readonly>
+                    <select>
+                        <option>SOL ⚡</option>
+                        <option>ETH 🟣</option>
+                        <option>BSC 🔺</option>
+                        <option>USDC 💎</option>
+                        <option>BNB 🟡</option>
+                    </select>
+                </div>
+                
+                <div class="down-arrow">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                    </svg>
+                </div>
+                
+                <div class="input-group">
+                    <label>Diterima</label>
+                    <input type="number" placeholder="0.00" value="0" readonly>
+                    <select>
+                        <option>GOBLIN 👹</option>
+                        <option>USDT 💵</option>
+                        <option>DAI 📊</option>
+                        <option>PYTH 🦒</option>
+                        <option>JUP 🪐</option>
+                    </select>
+                </div>
+                
+                <div class="slider-container">
+                    <label>Toleransi Slippage (Mode Uniswap):</label>
+                    <input type="range" min="0.1" max="5" step="0.1" value="0.5">
+                    <div style="display:flex; justify-content:space-between; margin-top:8px; color:var(--goblin-light); font-size:0.9em;">
+                        <span>0.1%</span>
+                        <span>0.5%</span>
+                        <span>1%</span>
+                        <span>5%</span>
+                    </div>
+                </div>
+                
+                <button class="swap-btn">🔥 SWAP SEKARANG</button>
+            </div>
         </div>
-
-        <footer>
-            <p>&copy; 2026 NEOGOBLIN DEX - All rights reserved | Powered by decentralized technology</p>
-        </footer>
     </div>
 
     <script>
-        // Particle background
-        const particlesContainer = document.getElementById('particles');
-        for(let i=0; i<30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.width = particle.style.height = (Math.random() * 50 + 20) + 'px';
-            particle.style.animationDelay = (Math.random() * 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
-
+        // Multi-language
         const translations = {
-            id: { title: "NEOGOBLIN DEX - Pertukaran Desentralisasi Global", location: "Lokasi Anda:", time: "Waktu Lokal:" },
-            en: { title: "NEOGOBLIN DEX - Global Decentralized Exchange", location: "Your Location:", time: "Local Time:" },
-            zh: { title: "NEOGOBLIN DEX - 全球去中心化交易所", location: "您的位置：", time: "当地时间：" }
+            id: {
+                locationTitle: "Lokasi Anda:",
+                timeTitle: "Waktu Lokal:",
+                send: "Kirim",
+                receive: "Diterima",
+                slippage: "Toleransi Slippage (Mode Uniswap):",
+                swapBtn: "🔥 SWAP SEKARANG"
+            },
+            en: {
+                locationTitle: "Your Location:",
+                timeTitle: "Local Time:",
+                send: "You Send",
+                receive: "You Receive",
+                slippage: "Slippage Tolerance (Uniswap Mode):",
+                swapBtn: "🔥 SWAP NOW"
+            }
         };
-
+        
         let currentLang = 'id';
-        function updateTranslations() { document.title = translations[currentLang].title; }
-        function initLanguages() {
-            const langs = [
-                {code:'ID',name:'Indonesia'},{code:'EN',name:'English'},{code:'ZH',name:'中文'},
-                {code:'JA',name:'日本語'},{code:'KO',name:'한국어'},{code:'AR',name:'العربية'},
-                {code:'RU',name:'Русский'},{code:'ES',name:'Español'},{code:'PT',name:'Português'},
-                {code:'FR',name:'Français'},{code:'DE',name:'Deutsch'},{code:'IT',name:'Italiano'},
-                {code:'NL',name:'Nederlands'},{code:'TR',name:'Türkçe'},{code:'HI',name:'हिन्दी'},
-                {code:'TH',name:'ไทย'},{code:'VI',name:'Tiếng Việt'}
-            ];
-            const container = document.getElementById('languageSwitcher');
-            langs.forEach(lang => {
-                const btn = document.createElement('button');
-                btn.className = 'lang-btn' + (lang.code === currentLang ? ' active' : '');
-                btn.textContent = lang.code;
-                btn.onclick = () => {
-                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentLang = lang.code.toLowerCase();
-                    updateTranslations();
-                };
-                container.appendChild(btn);
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                updateLanguage(btn.dataset.lang);
             });
-        }
-
-        async function detectLocation() {
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                document.getElementById('userLocation').textContent = `${data.city}, ${data.country_name}`;
-            } catch (e) { document.getElementById('userLocation').textContent = 'Unknown'; }
-        }
-        function updateTime() {
-            const now = new Date();
-            const options = { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, hour:'2-digit', minute:'2-digit', second:'2-digit' };
-            document.getElementById('localTime').textContent = now.toLocaleTimeString('en-US', options);
-            document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        }
-
-        async function fetchPrices() {
-            const coins = ['bitcoin','ethereum','solana','binancecoin','tether','cardano','polkadot','dogecoin','avalanche-2','chainlink'];
-            const grid = document.getElementById('marketPrices');
-            grid.innerHTML = '';
-            for (const coin of coins) {
-                try {
-                    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd&include_24h_change=true`);
-                    const data = await res.json()[coin];
-                    const isUp = data.usd_24h_change > 0;
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `<h3>${coin.toUpperCase()}</h3><div class="price $${data.usd.toFixed(2)} ${isUp?'up':'down'}">${isUp?'↗':'↘'} ${Math.abs(data.usd_24h_change).toFixed(2)}%</div>`;
-                    grid.appendChild(card);
-                } catch(e){ console.error('Error fetching price:', e); }
+        });
+        
+        function updateLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            
+            const labels = document.querySelectorAll('.input-group label');
+            if (lang === 'id') {
+                labels[0].textContent = "Kirim";
+                labels[1].textContent = "Diterima";
+            } else {
+                labels[0].textContent = "You Send";
+                labels[1].textContent = "You Receive";
             }
         }
-
-        function initTicker() {
-            const items = ['BTC $68,234 ↗ 2.3%', 'ETH $3,456 ↘ 1.1%', 'SOL $189 ↗ 5.7%', 'BNB $623 ↗ 3.2%', 'USDC $1.00 ➡ 0.0%'];
-            document.getElementById('tickerContent').innerHTML = items.map(item => `<span class="ticker-item">${item}</span>`).join('');
-        }
-
-        function initBridge() {
-            const routes = [
-                {from:'Solana',to:'Ethereum',time:'15 sec',fee:'0.0004 SOL'},
-                {from:'Ethereum',to:'BSC',time:'20 sec',fee:'$0.50 gas'},
-                {from:'Polygon',to:'Arbitrum',time:'10 sec',fee:'$0.20 gas'}
-            ];
-            const container = document.getElementById('bridgeRoutes');
-            routes.forEach(route => {
-                const div = document.createElement('div');
-                div.className = 'route-card';
-                div.innerHTML = `<strong>${route.from} → ${route.to}</strong><br>Avg time: ${route.time}<br>Fee: ${route.fee}`;
-                container.appendChild(div);
+        
+        // Location & Time
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('location').textContent = `${data.city}, ${data.country_name}`;
+                document.getElementById('timezone').textContent = data.timezone;
+                
+                const updateTime = () => {
+                    const now = new Date();
+                    document.getElementById('local-time').textContent = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                };
+                updateTime();
+                setInterval(updateTime, 1000);
+            })
+            .catch(err => {
+                console.error("Location error:", err);
+                document.getElementById('location').textContent = "Unknown";
             });
+        
+        // Price API
+        const COINGECKO_API = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,bnb-usd,tether&vs_currencies=usd&include_24h_change=true';
+        
+        async function fetchPrices() {
+            try {
+                const res = await fetch(COINGECKO_API);
+                const data = await res.json();
+                
+                const prices = [
+                    { sym: '₿', name: 'BTC', price: data.bitcoin.usd, change: data.bitcoin.usd_24h_change },
+                    { sym: 'Ξ', name: 'ETH', price: data.ethereum.usd, change: data.ethereum.usd_24h_change },
+                    { sym: '◎', name: 'SOL', price: data.solana.usd, change: data.solana.usd_24h_change },
+                    { sym: '💎', name: 'BNB', price: data['bnb-usd'].usd, change: data['bnb-usd'].usd_24h_change },
+                    { sym: 'USDT', name: '', price: data.tether.usd, change: data.tether.usd_24h_change }
+                ];
+                
+                let ticker = '';
+                prices.forEach(p => {
+                    const arrow = p.change >= 0 ? '▲' : '▼';
+                    const cls = p.change >= 0 ? 'up' : 'down';
+                    ticker += `<div class="ticker-item"><span>${p.sym}</span> ${p.name}: $${p.price?.toLocaleString()} <span class="${cls}" style="font-size:0.8em">${arrow} ${p.change?.toFixed(2)}%</span></div>`;
+                });
+                
+                document.getElementById('ticker-content').innerHTML = ticker;
+            } catch (err) {
+                console.error("Price error:", err);
+            }
         }
-
-        function initSlider() {
-            const slider = document.getElementById('slippageSlider'), label = document.getElementById('slippageValue');
-            slider.oninput = () => { label.textContent = slider.value + '%'; };
-        }
-
-        window.onload = () => {
-            initLanguages(); updateTranslations();
-            detectLocation(); setInterval(updateTime, 1000); updateTime();
-            initTicker(); fetchPrices(); setInterval(fetchPrices, 30000);
-            initBridge(); initSlider();
-        };
+        
+        fetchPrices();
+        setInterval(fetchPrices, 30000);
     </script>
 </body>
 </html>
+</parameter>
