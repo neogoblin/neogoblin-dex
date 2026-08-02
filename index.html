@@ -26,13 +26,14 @@
             padding: 25px 30px; border-radius: 25px; 
             background: rgba(46, 125, 50, 0.1);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(76, 175, 80, 0.3);
+            border: 2px solid var(--goblin-green);
             margin-bottom: 30px;
             animation: slideDown 0.8s ease-out;
             box-shadow: 0 10px 40px rgba(76,175,80,0.2);
         }
         @keyframes slideDown { 0% { transform: translateY(-50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
         
+        .logo-container { cursor: pointer; position: relative; }
         .logo { 
             font-family: 'Press Start 2P', cursive, sans-serif; 
             font-size: 2.5em; 
@@ -41,11 +42,63 @@
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             text-shadow: none; 
-            animation: logoGlow 3s infinite alternate;
             text-shadow: 0 0 20px rgba(76,175,80,0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: inline-block;
         }
-        @keyframes logoGlow { 0% { filter: drop-shadow(0 0 10px rgba(76,175,80,0.5)); } 100% { filter: drop-shadow(0 0 25px rgba(129,199,132,0.9)); } }
+        .logo:hover { 
+            transform: scale(1.1) rotate(2deg);
+            filter: drop-shadow(0 0 30px rgba(129,199,132,1));
+        }
+        .logo.sword-swing {
+            animation: swordSwing 0.3s ease-out;
+        }
+        @keyframes swordSwing {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.15); }
+            50% { transform: rotate(15deg) scale(1.2); }
+            75% { transform: rotate(-10deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
         .logo span { background: linear-gradient(135deg, var(--goblin-brown), var(--goblin-brown-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Animated Sword Icon */
+        .sword-icon {
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-45deg);
+            font-size: 3em;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .logo:hover .sword-icon {
+            opacity: 1;
+            transform: translateY(-50%) rotate(0deg);
+            animation: swingSword 0.4s ease-in-out infinite;
+        }
+        @keyframes swingSword {
+            0%, 100% { transform: translateY(-50%) rotate(-45deg); }
+            50% { transform: translateY(-50%) rotate(45deg); }
+        }
+        
+        /* Click Ripple Effect */
+        .ripple {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(129,199,132,0.8), transparent);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+            z-index: 50;
+        }
+        @keyframes rippleEffect {
+            to { transform: scale(4); opacity: 0; }
+        }
         
         .lang-switch { display: flex; gap: 12px; flex-wrap: wrap; }
         .lang-btn { 
@@ -245,6 +298,7 @@
             .swap-box { padding: 40px; }
             .price { font-size: 2em; }
             h2 { font-size: 2em; }
+            .logo { font-size: 1.8em; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -261,7 +315,10 @@
     
     <div class="container">
         <header>
-            <div class="logo">👹 NEO<span>GOBLIN</span></div>
+            <div class="logo-container" id="logoContainer" title="Click for sword sound!">
+                <div class="logo">👹 NEO<span>GOBLIN</span></div>
+                <div class="sword-icon">⚔️</div>
+            </div>
             <div class="lang-switch">
                 <button class="lang-btn active" data-lang="id">ID</button>
                 <button class="lang-btn" data-lang="en">EN</button>
@@ -367,6 +424,12 @@
         </div>
     </div>
 
+    <!-- Embedded Sword Sound (Base64 encoded short sword whoosh) -->
+    <audio id="swordSound" preload="auto">
+        <source src="data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" type="audio/mpeg">
+    </audio>
+    
+    <!-- Using web audio API for procedural sword sound -->
     <script>
         // Multi-language
         const translations = {
@@ -459,6 +522,72 @@
         
         fetchPrices();
         setInterval(fetchPrices, 30000);
+        
+        // === SWORD SOUND & ANIMATION ===
+        const logoContainer = document.getElementById('logoContainer');
+        const logo = document.querySelector('.logo');
+        
+        // Web Audio API for procedural sword sound
+        function playSwordSound() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const filter = ctx.createBiquadFilter();
+            
+            // Create whoosh-like sound
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.1);
+            osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.3);
+            
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1000, ctx.currentTime);
+            filter.Q.value = 5;
+            
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.start();
+            osc.stop(ctx.currentTime + 0.3);
+        }
+        
+        // Click interaction
+        logoContainer.addEventListener('click', (e) => {
+            // Play sound
+            playSwordSound();
+            
+            // Add animation class
+            logo.classList.add('sword-swing');
+            
+            // Create ripple effect
+            const rect = logoContainer.getBoundingClientRect();
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = e.clientX - rect.left - 50 + 'px';
+            ripple.style.top = e.clientY - rect.top - 50 + 'px';
+            logoContainer.appendChild(ripple);
+            
+            setTimeout(() => {
+                logo.classList.remove('sword-swing');
+                ripple.remove();
+            }, 600);
+        });
+        
+        // Auto-play on first hover
+        let firstHover = true;
+        logoContainer.addEventListener('mouseenter', () => {
+            if (firstHover) {
+                playSwordSound();
+                firstHover = false;
+            }
+        });
     </script>
 </body>
 </html>
